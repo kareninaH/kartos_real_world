@@ -7,7 +7,6 @@ import (
 	"real_world/pkg"
 	myerror "real_world/pkg/error"
 	"real_world/pkg/middleware/auth"
-	"strings"
 
 	"github.com/golang-jwt/jwt/v4"
 
@@ -96,10 +95,10 @@ func (uc UserUsecase) isTokenActivate(ctx context.Context, u *User) string {
 	if flag {
 		return token
 	} else {
-		var sb strings.Builder
-		sb.WriteString("Token ")
-		sb.WriteString(uc.generateToken(u.Username, u.Email))
-		token = sb.String()
+		//var sb strings.Builder
+		//sb.WriteString("Token ")
+		//sb.WriteString()
+		token = uc.generateToken(u.Username, u.Email)
 		uc.ur.SaveToken(ctx, token, u.Email, u.Username)
 		return token
 	}
