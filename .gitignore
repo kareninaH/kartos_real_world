@@ -38,3 +38,4 @@ bin/
 *.swp
 
 /deploy/docker-compose/data/
+/deploy/docker-compose/redis/
