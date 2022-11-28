@@ -10,7 +10,7 @@ data:
 #    driver: mysql
     dsn: root:realworld@tcp(127.0.0.1:3306)/real_world?charset=utf8mb4&parseTime=True&loc=Local
   redis:
-    addr: 127.0.0.1:6379
+    addr: 192.168.3.204:6369
     read_timeout: 0.2s
     write_timeout: 0.2s
 jwt:

@@ -1,6 +1,9 @@
 package error
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
 // 描述: 自定义error
 // 作者: hgy
@@ -23,4 +26,12 @@ func NewHttpError(code int, filed string, message ...string) *HttpError {
 
 func (h HttpError) Error() string {
 	return fmt.Sprintf("HttpError code: %d, body: %s", h.Code, h.Errors)
+}
+
+func HttpBadRequest(filed string, message ...string) *HttpError {
+	return NewHttpError(http.StatusBadRequest, filed, message...)
+}
+
+func HttpUnauthorized(filed string, message ...string) *HttpError {
+	return NewHttpError(http.StatusUnauthorized, filed, message...)
 }

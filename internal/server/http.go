@@ -57,6 +57,7 @@ func NewSkipListMatcher() selector.MatchFunc {
 	// gRPC path 的拼接规则为 /包名.服务名/方法名 详情见官网
 	skipList["/realworld.v1.RealWorld/Login"] = struct{}{}
 	skipList["/realworld.v1.RealWorld/Register"] = struct{}{}
+	skipList["/realworld.v1.RealWorld/GetArticle"] = struct{}{}
 	return func(ctx context.Context, operation string) bool {
 		if _, ok := skipList[operation]; ok {
 			return false

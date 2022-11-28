@@ -7,9 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-kratos/kratos/v2/errors"
+	myerror "real_world/pkg/error"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/go-kratos/kratos/v2/middleware"
 	"github.com/go-kratos/kratos/v2/transport"
 	"github.com/golang-jwt/jwt/v4"
@@ -24,9 +23,12 @@ const (
 	jwtHeader = "Authorization"
 )
 
+type authKey struct{}
+
 // JWTAuth 校验JWT
 func JWTAuth(secret string) middleware.Middleware {
 	return func(handler middleware.Handler) middleware.Handler {
+		var newCtx context.Context
 		return func(ctx context.Context, req interface{}) (reply interface{}, err error) {
 			if tr, ok := transport.FromServerContext(ctx); ok {
 				tokenString := tr.RequestHeader().Get(jwtHeader)
@@ -45,25 +47,29 @@ func JWTAuth(secret string) middleware.Middleware {
 				})
 
 				if err != nil {
-					return nil, errors.New(http.StatusUnauthorized, "JWT_PARSE_ERROR", "no authorization")
+					return nil, myerror.NewHttpError(http.StatusUnauthorized, "JWT_PARSE_ERROR", "no authorization")
 				}
 
 				if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-					//fmt.Println(claims["foo"], claims["nbf"])
-					spew.Dump(claims["username"])
+					//var info [2]string
+					//info[0] = claims["username"].(string)
+					//info[1] = claims["email"].(string)
+					//spew.Dump(claims["username"], claims["email"])
+					newCtx = NewContext(ctx, claims)
 				} else {
-					return nil, errors.New(http.StatusUnauthorized, "JWT_PAYLOAD_PARSE_ERROR", "no authorization")
+					return nil, myerror.NewHttpError(http.StatusUnauthorized, "JWT_PARSE_ERROR", "no authorization")
 				}
 			}
-			return handler(ctx, req)
+			return handler(newCtx, req)
 		}
 	}
 }
 
-func GenerateToken(secret, username string) string {
+func GenerateToken(secret, username, email string) string {
 	// Create a new token object, specifying signing method and the claims
 	// you would like it to contain.
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"email":    email,
 		"username": username,
 		"nbf":      time.Date(2015, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
 	})
@@ -75,4 +81,15 @@ func GenerateToken(secret, username string) string {
 		panic(err)
 	}
 	return tokenString
+}
+
+// NewContext put auth info into context
+func NewContext(ctx context.Context, info jwt.Claims) context.Context {
+	return context.WithValue(ctx, authKey{}, info)
+}
+
+// FromContext extract auth info from context
+func FromContext(ctx context.Context) (token jwt.Claims, ok bool) {
+	token, ok = ctx.Value(authKey{}).(jwt.Claims)
+	return
 }
