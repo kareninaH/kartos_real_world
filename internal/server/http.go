@@ -1,9 +1,13 @@
 package server
 
 import (
+	"context"
 	v1 "real_world/api/real_world/v1"
 	"real_world/internal/conf"
 	"real_world/internal/service"
+	"real_world/pkg/middleware/auth"
+
+	"github.com/go-kratos/kratos/v2/middleware/selector"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
@@ -11,10 +15,11 @@ import (
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, rw *service.RealWorldService, logger log.Logger) *http.Server {
+func NewHTTPServer(c *conf.Server, rw *service.RealWorldService, logger log.Logger, jwt *conf.JWT) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
+			selector.Server(auth.JWTAuth(jwt.Secret)).Match(NewSkipListMatcher()).Build(),
 		),
 	}
 	if c.Http.Network != "" {
@@ -29,4 +34,18 @@ func NewHTTPServer(c *conf.Server, rw *service.RealWorldService, logger log.Logg
 	srv := http.NewServer(opts...)
 	v1.RegisterRealWorldHTTPServer(srv, rw)
 	return srv
+}
+
+func NewSkipListMatcher() selector.MatchFunc {
+
+	skipList := make(map[string]struct{})
+	// gRPC path 的拼接规则为 /包名.服务名/方法名 详情见官网
+	skipList["realworld.v1.RealWorld/Login"] = struct{}{}
+	skipList["/realworld.v1.RealWorld/Register"] = struct{}{}
+	return func(ctx context.Context, operation string) bool {
+		if _, ok := skipList[operation]; ok {
+			return false
+		}
+		return true
+	}
 }

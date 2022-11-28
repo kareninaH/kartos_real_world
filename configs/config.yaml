@@ -7,9 +7,11 @@ server:
     timeout: 1s
 data:
   database:
-    driver: mysql
-    source: root:root@tcp(127.0.0.1:3306)/test
+#    driver: mysql
+    dsn: root:realworld@tcp(127.0.0.1:3306)/real_world?charset=utf8mb4&parseTime=True&loc=Local
   redis:
     addr: 127.0.0.1:6379
     read_timeout: 0.2s
     write_timeout: 0.2s
+jwt:
+  secret: karenina

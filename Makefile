@@ -50,6 +50,11 @@ build:
 	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
 
 .PHONY: generate
+# wire
+wire:
+	cd cmd/real_world && wire
+
+.PHONY: generate
 # generate
 generate:
 	go mod tidy

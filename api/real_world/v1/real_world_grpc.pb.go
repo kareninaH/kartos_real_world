@@ -8,6 +8,7 @@ package v1
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -52,7 +53,7 @@ func NewRealWorldClient(cc grpc.ClientConnInterface) RealWorldClient {
 
 func (c *realWorldClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*UserReply, error) {
 	out := new(UserReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/Login", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/Login", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +62,7 @@ func (c *realWorldClient) Login(ctx context.Context, in *LoginRequest, opts ...g
 
 func (c *realWorldClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*UserReply, error) {
 	out := new(UserReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/Register", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/Register", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +71,7 @@ func (c *realWorldClient) Register(ctx context.Context, in *RegisterRequest, opt
 
 func (c *realWorldClient) GetCurrentUser(ctx context.Context, in *GetCurrentUserRequest, opts ...grpc.CallOption) (*UserReply, error) {
 	out := new(UserReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/GetCurrentUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/GetCurrentUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +80,7 @@ func (c *realWorldClient) GetCurrentUser(ctx context.Context, in *GetCurrentUser
 
 func (c *realWorldClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UserReply, error) {
 	out := new(UserReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/UpdateUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/UpdateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +89,7 @@ func (c *realWorldClient) UpdateUser(ctx context.Context, in *UpdateUserRequest,
 
 func (c *realWorldClient) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...grpc.CallOption) (*ProfileReply, error) {
 	out := new(ProfileReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/GetProfile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/GetProfile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +98,7 @@ func (c *realWorldClient) GetProfile(ctx context.Context, in *GetProfileRequest,
 
 func (c *realWorldClient) FollowUser(ctx context.Context, in *FollowUserRequest, opts ...grpc.CallOption) (*ProfileReply, error) {
 	out := new(ProfileReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/FollowUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/FollowUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +107,7 @@ func (c *realWorldClient) FollowUser(ctx context.Context, in *FollowUserRequest,
 
 func (c *realWorldClient) UnFollowUser(ctx context.Context, in *UnFollowUserRequest, opts ...grpc.CallOption) (*ProfileReply, error) {
 	out := new(ProfileReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/UnFollowUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/UnFollowUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +116,7 @@ func (c *realWorldClient) UnFollowUser(ctx context.Context, in *UnFollowUserRequ
 
 func (c *realWorldClient) ListArticles(ctx context.Context, in *ListArticlesRequest, opts ...grpc.CallOption) (*MultipleArticlesReply, error) {
 	out := new(MultipleArticlesReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/ListArticles", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/ListArticles", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +125,7 @@ func (c *realWorldClient) ListArticles(ctx context.Context, in *ListArticlesRequ
 
 func (c *realWorldClient) FeedArticles(ctx context.Context, in *FeedArticlesRequest, opts ...grpc.CallOption) (*MultipleArticlesReply, error) {
 	out := new(MultipleArticlesReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/FeedArticles", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/FeedArticles", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +134,7 @@ func (c *realWorldClient) FeedArticles(ctx context.Context, in *FeedArticlesRequ
 
 func (c *realWorldClient) GetArticle(ctx context.Context, in *GetArticleRequest, opts ...grpc.CallOption) (*SingleArticleReply, error) {
 	out := new(SingleArticleReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/GetArticle", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/GetArticle", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +143,7 @@ func (c *realWorldClient) GetArticle(ctx context.Context, in *GetArticleRequest,
 
 func (c *realWorldClient) UpdateArticle(ctx context.Context, in *UpdateArticleRequest, opts ...grpc.CallOption) (*SingleArticleReply, error) {
 	out := new(SingleArticleReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/UpdateArticle", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/UpdateArticle", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +152,7 @@ func (c *realWorldClient) UpdateArticle(ctx context.Context, in *UpdateArticleRe
 
 func (c *realWorldClient) DeleteArticle(ctx context.Context, in *DeleteArticleRequest, opts ...grpc.CallOption) (*DeleteArticleReply, error) {
 	out := new(DeleteArticleReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/DeleteArticle", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/DeleteArticle", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +161,7 @@ func (c *realWorldClient) DeleteArticle(ctx context.Context, in *DeleteArticleRe
 
 func (c *realWorldClient) AddComment(ctx context.Context, in *AddCommentRequest, opts ...grpc.CallOption) (*SingleCommentReply, error) {
 	out := new(SingleCommentReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/AddComment", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/AddComment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +170,7 @@ func (c *realWorldClient) AddComment(ctx context.Context, in *AddCommentRequest,
 
 func (c *realWorldClient) GetComments(ctx context.Context, in *GetCommentsRequest, opts ...grpc.CallOption) (*MultipleCommentsReply, error) {
 	out := new(MultipleCommentsReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/GetComments", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/GetComments", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -178,7 +179,7 @@ func (c *realWorldClient) GetComments(ctx context.Context, in *GetCommentsReques
 
 func (c *realWorldClient) DeleteComments(ctx context.Context, in *DeleteCommentsRequest, opts ...grpc.CallOption) (*DeleteCommentsReply, error) {
 	out := new(DeleteCommentsReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/DeleteComments", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/DeleteComments", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +188,7 @@ func (c *realWorldClient) DeleteComments(ctx context.Context, in *DeleteComments
 
 func (c *realWorldClient) FavoriteArticle(ctx context.Context, in *FavoriteArticleRequest, opts ...grpc.CallOption) (*SingleArticleReply, error) {
 	out := new(SingleArticleReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/FavoriteArticle", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/FavoriteArticle", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -196,7 +197,7 @@ func (c *realWorldClient) FavoriteArticle(ctx context.Context, in *FavoriteArtic
 
 func (c *realWorldClient) UnFavoriteArticle(ctx context.Context, in *UnFavoriteArticleRequest, opts ...grpc.CallOption) (*SingleArticleReply, error) {
 	out := new(SingleArticleReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/UnFavoriteArticle", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/UnFavoriteArticle", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +206,7 @@ func (c *realWorldClient) UnFavoriteArticle(ctx context.Context, in *UnFavoriteA
 
 func (c *realWorldClient) GetTags(ctx context.Context, in *GetTagsRequest, opts ...grpc.CallOption) (*ListTagsReply, error) {
 	out := new(ListTagsReply)
-	err := c.cc.Invoke(ctx, "/api.realworld.v1.RealWorld/GetTags", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/GetTags", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +319,7 @@ func _RealWorld_Login_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/Login",
+		FullMethod: "/realworld.v1.RealWorld/Login",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).Login(ctx, req.(*LoginRequest))
@@ -336,7 +337,7 @@ func _RealWorld_Register_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/Register",
+		FullMethod: "/realworld.v1.RealWorld/Register",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).Register(ctx, req.(*RegisterRequest))
@@ -354,7 +355,7 @@ func _RealWorld_GetCurrentUser_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/GetCurrentUser",
+		FullMethod: "/realworld.v1.RealWorld/GetCurrentUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).GetCurrentUser(ctx, req.(*GetCurrentUserRequest))
@@ -372,7 +373,7 @@ func _RealWorld_UpdateUser_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/UpdateUser",
+		FullMethod: "/realworld.v1.RealWorld/UpdateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).UpdateUser(ctx, req.(*UpdateUserRequest))
@@ -390,7 +391,7 @@ func _RealWorld_GetProfile_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/GetProfile",
+		FullMethod: "/realworld.v1.RealWorld/GetProfile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).GetProfile(ctx, req.(*GetProfileRequest))
@@ -408,7 +409,7 @@ func _RealWorld_FollowUser_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/FollowUser",
+		FullMethod: "/realworld.v1.RealWorld/FollowUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).FollowUser(ctx, req.(*FollowUserRequest))
@@ -426,7 +427,7 @@ func _RealWorld_UnFollowUser_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/UnFollowUser",
+		FullMethod: "/realworld.v1.RealWorld/UnFollowUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).UnFollowUser(ctx, req.(*UnFollowUserRequest))
@@ -444,7 +445,7 @@ func _RealWorld_ListArticles_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/ListArticles",
+		FullMethod: "/realworld.v1.RealWorld/ListArticles",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).ListArticles(ctx, req.(*ListArticlesRequest))
@@ -462,7 +463,7 @@ func _RealWorld_FeedArticles_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/FeedArticles",
+		FullMethod: "/realworld.v1.RealWorld/FeedArticles",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).FeedArticles(ctx, req.(*FeedArticlesRequest))
@@ -480,7 +481,7 @@ func _RealWorld_GetArticle_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/GetArticle",
+		FullMethod: "/realworld.v1.RealWorld/GetArticle",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).GetArticle(ctx, req.(*GetArticleRequest))
@@ -498,7 +499,7 @@ func _RealWorld_UpdateArticle_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/UpdateArticle",
+		FullMethod: "/realworld.v1.RealWorld/UpdateArticle",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).UpdateArticle(ctx, req.(*UpdateArticleRequest))
@@ -516,7 +517,7 @@ func _RealWorld_DeleteArticle_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/DeleteArticle",
+		FullMethod: "/realworld.v1.RealWorld/DeleteArticle",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).DeleteArticle(ctx, req.(*DeleteArticleRequest))
@@ -534,7 +535,7 @@ func _RealWorld_AddComment_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/AddComment",
+		FullMethod: "/realworld.v1.RealWorld/AddComment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).AddComment(ctx, req.(*AddCommentRequest))
@@ -552,7 +553,7 @@ func _RealWorld_GetComments_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/GetComments",
+		FullMethod: "/realworld.v1.RealWorld/GetComments",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).GetComments(ctx, req.(*GetCommentsRequest))
@@ -570,7 +571,7 @@ func _RealWorld_DeleteComments_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/DeleteComments",
+		FullMethod: "/realworld.v1.RealWorld/DeleteComments",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).DeleteComments(ctx, req.(*DeleteCommentsRequest))
@@ -588,7 +589,7 @@ func _RealWorld_FavoriteArticle_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/FavoriteArticle",
+		FullMethod: "/realworld.v1.RealWorld/FavoriteArticle",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).FavoriteArticle(ctx, req.(*FavoriteArticleRequest))
@@ -606,7 +607,7 @@ func _RealWorld_UnFavoriteArticle_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/UnFavoriteArticle",
+		FullMethod: "/realworld.v1.RealWorld/UnFavoriteArticle",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).UnFavoriteArticle(ctx, req.(*UnFavoriteArticleRequest))
@@ -624,7 +625,7 @@ func _RealWorld_GetTags_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.realworld.v1.RealWorld/GetTags",
+		FullMethod: "/realworld.v1.RealWorld/GetTags",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RealWorldServer).GetTags(ctx, req.(*GetTagsRequest))
@@ -636,7 +637,7 @@ func _RealWorld_GetTags_Handler(srv interface{}, ctx context.Context, dec func(i
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var RealWorld_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.realworld.v1.RealWorld",
+	ServiceName: "realworld.v1.RealWorld",
 	HandlerType: (*RealWorldServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

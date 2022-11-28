@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package api.realworld.v1;
+package realworld.v1;
 
 option go_package = "real_world/api/real_world/v1;v1";
 
@@ -74,29 +74,29 @@ service RealWorld {
 	}
     rpc AddComment (AddCommentRequest) returns (SingleCommentReply) {
 		option (google.api.http) = {
-			post: "/api/articles/:slug/comments",
+			post: "/api/articles/{slug}/comments",
             body: "*",
 		};
 	}
     rpc GetComments (GetCommentsRequest) returns (MultipleCommentsReply) {
 		option (google.api.http) = {
-			get: "/api/articles/:slug/comments",
+			get: "/api/articles/{slug}/comments",
 		};
 	}
     rpc DeleteComments (DeleteCommentsRequest) returns (DeleteCommentsReply) {
 		option (google.api.http) = {
-			get: "/api/articles/:slug/comments/:id",
+			get: "/api/articles/{slug}/comments/:id",
 		};
 	}
     rpc FavoriteArticle (FavoriteArticleRequest) returns (SingleArticleReply) {
 		option (google.api.http) = {
-			post: "/api/articles/:slug/favorite",
+			post: "/api/articles/{slug}/favorite",
             body: "*",
 		};
 	}
     rpc UnFavoriteArticle (UnFavoriteArticleRequest) returns (SingleArticleReply) {
 		option (google.api.http) = {
-			delete: "/api/articles/:slug/favorite",
+			delete: "/api/articles/{slug}/favorite",
 		};
 	}
     rpc GetTags (GetTagsRequest) returns (ListTagsReply) {
