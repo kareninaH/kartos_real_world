@@ -2,8 +2,10 @@ package service
 
 import (
 	"context"
+	"net/http"
 
 	v1 "real_world/api/real_world/v1"
+	myerror "real_world/pkg/error"
 )
 
 // 描述: 用户相关api
@@ -11,6 +13,9 @@ import (
 // 创建日期: 2022/11/26
 
 func (s *RealWorldService) Login(ctx context.Context, req *v1.LoginRequest) (*v1.UserReply, error) {
+	if len(req.User.Email) == 0 {
+		return nil, myerror.NewHttpError(http.StatusUnprocessableEntity, "email", "can be empty")
+	}
 	return &v1.UserReply{
 		User: &v1.UserReply_User{
 			Email:    "boom",

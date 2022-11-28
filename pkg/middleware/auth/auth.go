@@ -3,8 +3,11 @@ package auth
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
+
+	"github.com/go-kratos/kratos/v2/errors"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/go-kratos/kratos/v2/middleware"
@@ -42,14 +45,14 @@ func JWTAuth(secret string) middleware.Middleware {
 				})
 
 				if err != nil {
-					return nil, err
+					return nil, errors.New(http.StatusUnauthorized, "JWT_PARSE_ERROR", "no authorization")
 				}
 
 				if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 					//fmt.Println(claims["foo"], claims["nbf"])
 					spew.Dump(claims["username"])
 				} else {
-					return nil, fmt.Errorf("Token Invalid")
+					return nil, errors.New(http.StatusUnauthorized, "JWT_PAYLOAD_PARSE_ERROR", "no authorization")
 				}
 			}
 			return handler(ctx, req)
