@@ -6,3 +6,6 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: realworld
+      MYSQL_DATABASE: real_world # 自动创建
+    volumes:
+      - "./data:/var/lib/mysql"
