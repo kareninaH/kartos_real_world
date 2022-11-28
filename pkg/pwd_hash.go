@@ -1,8 +1,6 @@
 package pkg
 
 import (
-	"fmt"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -15,7 +13,7 @@ func GeneratePasswordHash(pwd string) string {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%s", pwdHash)
+	//fmt.Printf("%s", pwdHash)
 	return string(pwdHash)
 }
 
