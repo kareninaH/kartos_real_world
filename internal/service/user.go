@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
 	"net/http"
 	"real_world/internal/biz"
 
@@ -40,7 +41,14 @@ func (s *RealWorldService) GetCurrentUser(ctx context.Context, req *v1.GetCurren
 	return userLoginToUserReply(ul), nil
 }
 func (s *RealWorldService) UpdateUser(ctx context.Context, req *v1.UpdateUserRequest) (*v1.UserReply, error) {
-	return &v1.UserReply{}, nil
+	var u biz.User
+	err := copier.Copy(&u, req)
+	if err != nil {
+		return nil, myerror.HttpBadRequest("user", "update fail")
+	}
+
+	ul, err := s.uuc.UpdateUser(ctx, &u, req.Password)
+	return userLoginToUserReply(ul), nil
 }
 func (s *RealWorldService) GetProfile(ctx context.Context, req *v1.GetProfileRequest) (*v1.ProfileReply, error) {
 	return &v1.ProfileReply{}, nil

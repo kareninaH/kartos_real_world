@@ -12,11 +12,11 @@ import (
 
 type User struct {
 	gorm.Model
-	Email    string `gorm:"column:email;type:VARCHAR(255);NOT NULL;uniqueIndex"`
-	Username string `gorm:"column:username;type:VARCHAR(255);NOT NULL;unique"`
-	Password string `gorm:"column:password;type:VARCHAR(255);NOT NULL"`
-	Bio      string `gorm:"column:bio;type:VARCHAR(255);"`
-	Image    string `gorm:"column:image;type:VARCHAR(255);"`
+	Email    string  `gorm:"column:email;type:VARCHAR(255);NOT NULL;uniqueIndex"`
+	Username string  `gorm:"column:username;type:VARCHAR(255);NOT NULL;unique"`
+	Password string  `gorm:"column:password;type:VARCHAR(255);NOT NULL"`
+	Bio      *string `gorm:"column:bio;type:VARCHAR(255);"`
+	Image    *string `gorm:"column:image;type:VARCHAR(255);"`
 }
 
 //type Profiles struct {
@@ -65,12 +65,24 @@ func (r userRepo) GetUserByEmail(ctx context.Context, email string) (*biz.User, 
 	return dataToBiz(&u), nil
 }
 
+func (r userRepo) Update(ctx context.Context, user *biz.User) error {
+	u := bizToData(user)
+	var us User
+	r.data.db.Select("id").Where(&User{Email: u.Email}).First(&us)
+
+	result := r.data.db.Model(&us).Updates(u)
+	if result.Error != nil {
+		return myerror.HttpBadRequest("user", "update fail")
+	}
+	return nil
+}
+
 func dataToBiz(u *User) *biz.User {
 	return &biz.User{
 		Email:          u.Email,
 		Username:       u.Username,
-		Bio:            u.Bio,
-		Image:          u.Image,
+		Bio:            *u.Bio,
+		Image:          *u.Image,
 		PasswordHashed: u.Password,
 	}
 }
@@ -80,7 +92,7 @@ func bizToData(u *biz.User) *User {
 		Email:    u.Email,
 		Username: u.Username,
 		Password: u.PasswordHashed,
-		Bio:      u.Bio,
-		Image:    u.Image,
+		Bio:      &u.Bio,
+		Image:    &u.Image,
 	}
 }

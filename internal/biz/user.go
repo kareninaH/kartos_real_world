@@ -36,6 +36,7 @@ type UserRepo interface {
 	GetUserByEmail(ctx context.Context, email string) (*User, error)
 	SaveToken(ctx context.Context, token, email, username string)
 	GetToken(ctx context.Context, email, username string) (bool, string)
+	Update(ctx context.Context, user *User) error
 }
 
 type ProfileRepo interface {
@@ -116,6 +117,17 @@ func (uc UserUsecase) GetCurrentUser(ctx context.Context) (*UserLogin, error) {
 	}
 
 	return uc.userToUserLogin(ctx, user)
+}
+
+// UpdateUser 更新用户信息
+func (uc UserUsecase) UpdateUser(ctx context.Context, u *User, pwd string) (*UserLogin, error) {
+	if len(pwd) > 0 {
+		u.PasswordHashed = pkg.GeneratePasswordHash(pwd)
+	}
+	if err := uc.ur.Update(ctx, u); err != nil {
+		return nil, err
+	}
+	return uc.userToUserLogin(ctx, u)
 }
 
 func (uc UserUsecase) userToUserLogin(ctx context.Context, u *User) (*UserLogin, error) {

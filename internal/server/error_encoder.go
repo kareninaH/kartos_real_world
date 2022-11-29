@@ -20,7 +20,7 @@ func FromError(err error) *myerror.HttpError {
 	if se := new(myerror.HttpError); errors.As(err, &se) {
 		return se
 	}
-	return myerror.NewHttpError(stdhttp.StatusInternalServerError, "error", "FromError()")
+	return myerror.NewHttpError(stdhttp.StatusInternalServerError, "error", err.Error())
 }
 
 func errorEncoder(w stdhttp.ResponseWriter, r *stdhttp.Request, err error) {

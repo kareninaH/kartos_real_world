@@ -630,13 +630,9 @@ components:
         realworld.v1.UpdateUserRequest:
             type: object
             properties:
-                user:
-                    $ref: '#/components/schemas/realworld.v1.UpdateUserRequest_User'
-        realworld.v1.UpdateUserRequest_User:
-            type: object
-            properties:
                 email:
                     type: string
+                    description: message User {        string email = 1;        string password = 2;        string username = 3;        string bio = 4;        string image = 5;    }
                 password:
                     type: string
                 username:
