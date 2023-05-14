@@ -1,9 +1,8 @@
 package data
 
 import (
-	"real_world/internal/conf"
-
 	"github.com/go-redis/redis/v8"
+	"real_world/internal/conf"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"

@@ -41,6 +41,23 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/realworld.v1.MultipleArticlesReply'
+        post:
+            tags:
+                - RealWorld
+            operationId: RealWorld_CreateArticle
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/realworld.v1.CreateArticleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.SingleArticleReply'
     /api/articles/feed:
         get:
             tags:
@@ -263,7 +280,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/realworld.v1.ProfileReply'
-    /api/profiles/{username}/follow}:
+    /api/profiles/{username}/follow:
         post:
             tags:
                 - RealWorld
@@ -395,6 +412,24 @@ components:
             properties:
                 body:
                     type: string
+        realworld.v1.CreateArticleRequest:
+            type: object
+            properties:
+                article:
+                    $ref: '#/components/schemas/realworld.v1.CreateArticleRequest_Article'
+        realworld.v1.CreateArticleRequest_Article:
+            type: object
+            properties:
+                title:
+                    type: string
+                description:
+                    type: string
+                body:
+                    type: string
+                tagList:
+                    type: array
+                    items:
+                        type: string
         realworld.v1.DeleteArticleReply:
             type: object
             properties: {}

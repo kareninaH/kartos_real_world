@@ -2,7 +2,6 @@ package data
 
 import (
 	"context"
-	"fmt"
 	"testing"
 )
 
@@ -12,8 +11,5 @@ import (
 
 func (r userRepo) testRedis(t *testing.T) {
 	ctx := context.Background()
-	err := r.SaveToken(ctx, "123", "123@abc.com", "demo1")
-	if err != nil {
-		fmt.Println(err)
-	}
+	r.SaveToken(ctx, "123", "123@abc.com", "demo1")
 }

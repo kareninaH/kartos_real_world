@@ -32,6 +32,7 @@ type RealWorldClient interface {
 	ListArticles(ctx context.Context, in *ListArticlesRequest, opts ...grpc.CallOption) (*MultipleArticlesReply, error)
 	FeedArticles(ctx context.Context, in *FeedArticlesRequest, opts ...grpc.CallOption) (*MultipleArticlesReply, error)
 	GetArticle(ctx context.Context, in *GetArticleRequest, opts ...grpc.CallOption) (*SingleArticleReply, error)
+	CreateArticle(ctx context.Context, in *CreateArticleRequest, opts ...grpc.CallOption) (*SingleArticleReply, error)
 	UpdateArticle(ctx context.Context, in *UpdateArticleRequest, opts ...grpc.CallOption) (*SingleArticleReply, error)
 	DeleteArticle(ctx context.Context, in *DeleteArticleRequest, opts ...grpc.CallOption) (*DeleteArticleReply, error)
 	AddComment(ctx context.Context, in *AddCommentRequest, opts ...grpc.CallOption) (*SingleCommentReply, error)
@@ -140,6 +141,15 @@ func (c *realWorldClient) GetArticle(ctx context.Context, in *GetArticleRequest,
 	return out, nil
 }
 
+func (c *realWorldClient) CreateArticle(ctx context.Context, in *CreateArticleRequest, opts ...grpc.CallOption) (*SingleArticleReply, error) {
+	out := new(SingleArticleReply)
+	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/CreateArticle", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *realWorldClient) UpdateArticle(ctx context.Context, in *UpdateArticleRequest, opts ...grpc.CallOption) (*SingleArticleReply, error) {
 	out := new(SingleArticleReply)
 	err := c.cc.Invoke(ctx, "/realworld.v1.RealWorld/UpdateArticle", in, out, opts...)
@@ -226,6 +236,7 @@ type RealWorldServer interface {
 	ListArticles(context.Context, *ListArticlesRequest) (*MultipleArticlesReply, error)
 	FeedArticles(context.Context, *FeedArticlesRequest) (*MultipleArticlesReply, error)
 	GetArticle(context.Context, *GetArticleRequest) (*SingleArticleReply, error)
+	CreateArticle(context.Context, *CreateArticleRequest) (*SingleArticleReply, error)
 	UpdateArticle(context.Context, *UpdateArticleRequest) (*SingleArticleReply, error)
 	DeleteArticle(context.Context, *DeleteArticleRequest) (*DeleteArticleReply, error)
 	AddComment(context.Context, *AddCommentRequest) (*SingleCommentReply, error)
@@ -270,6 +281,9 @@ func (UnimplementedRealWorldServer) FeedArticles(context.Context, *FeedArticlesR
 }
 func (UnimplementedRealWorldServer) GetArticle(context.Context, *GetArticleRequest) (*SingleArticleReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetArticle not implemented")
+}
+func (UnimplementedRealWorldServer) CreateArticle(context.Context, *CreateArticleRequest) (*SingleArticleReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateArticle not implemented")
 }
 func (UnimplementedRealWorldServer) UpdateArticle(context.Context, *UpdateArticleRequest) (*SingleArticleReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateArticle not implemented")
@@ -488,6 +502,24 @@ func _RealWorld_GetArticle_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RealWorld_CreateArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateArticleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RealWorldServer).CreateArticle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/realworld.v1.RealWorld/CreateArticle",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RealWorldServer).CreateArticle(ctx, req.(*CreateArticleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RealWorld_UpdateArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateArticleRequest)
 	if err := dec(in); err != nil {
@@ -678,6 +710,10 @@ var RealWorld_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetArticle",
 			Handler:    _RealWorld_GetArticle_Handler,
+		},
+		{
+			MethodName: "CreateArticle",
+			Handler:    _RealWorld_CreateArticle_Handler,
 		},
 		{
 			MethodName: "UpdateArticle",

@@ -37,13 +37,13 @@ service RealWorld {
 	}
     rpc FollowUser (FollowUserRequest) returns (ProfileReply) {
 		option (google.api.http) = {
-			post: "/api/profiles/{username}/follow}",
+			post: "/api/profiles/{username}/follow",
             body: "*",
 		};
 	}
     rpc UnFollowUser (UnFollowUserRequest) returns (ProfileReply) {
 		option (google.api.http) = {
-			delete: "/api/profiles/{username}/follow}",
+			delete: "/api/profiles/{username}/follow",
 		};
 	}
     rpc ListArticles (ListArticlesRequest) returns (MultipleArticlesReply) {
@@ -61,6 +61,12 @@ service RealWorld {
 			get: "/api/articles/{slug}",
 		};
 	}
+  rpc CreateArticle (CreateArticleRequest) returns (SingleArticleReply) {
+    option (google.api.http) = {
+      post: "/api/articles",
+      body: "*"
+    };
+  }
     rpc UpdateArticle (UpdateArticleRequest) returns (SingleArticleReply) {
 		option (google.api.http) = {
 			put: "/api/articles/{slug}",
@@ -154,6 +160,18 @@ message UpdateArticleRequest {
 
     Article article = 1;
     string slug = 2;
+}
+
+message CreateArticleRequest {
+
+  message Article {
+    string title = 1;
+    string description = 2;
+    string body = 3;
+    repeated string tagList = 4;
+  }
+
+  Article article = 1;
 }
 
 message GetArticleRequest {

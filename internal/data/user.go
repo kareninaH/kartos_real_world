@@ -13,7 +13,7 @@ import (
 type User struct {
 	gorm.Model
 	Email    string  `gorm:"column:email;type:VARCHAR(255);NOT NULL;uniqueIndex"`
-	Username string  `gorm:"column:username;type:VARCHAR(255);NOT NULL;unique"`
+	Username string  `gorm:"column:username;type:VARCHAR(255);NOT NULL;uniqueIndex"`
 	Password string  `gorm:"column:password;type:VARCHAR(255);NOT NULL"`
 	Bio      *string `gorm:"column:bio;type:VARCHAR(255);"`
 	Image    *string `gorm:"column:image;type:VARCHAR(255);"`
@@ -30,8 +30,8 @@ type User struct {
 
 type UserFollow struct {
 	gorm.Model
-	UserId       int `gorm:"index:idx_userid_followuserid"`
-	FollowUserId int `gorm:"index:idx_userid_followuserid"`
+	UserName       string `gorm:"index:idx_username_followusername;type:varchar(255)"`
+	FollowUserName string `gorm:"index:idx_username_followusername;type:varchar(255)"`
 }
 
 type userRepo struct {
@@ -47,7 +47,7 @@ func NewUserRepo(data *Data, logger log.Logger) biz.UserRepo {
 }
 
 func (r userRepo) Create(ctx context.Context, user *biz.User) error {
-	u := bizToData(user)
+	u := bizToDataUser(user)
 	result := r.data.db.Create(&u)
 	log.Info("新用户Id:", u.ID, "插入条数:", result.RowsAffected)
 	if result.Error != nil {
@@ -65,8 +65,17 @@ func (r userRepo) GetUserByEmail(ctx context.Context, email string) (*biz.User, 
 	return dataToBiz(&u), nil
 }
 
+func (r userRepo) GetUserByUsername(ctx context.Context, username string) (*biz.User, error) {
+	var u User
+	result := r.data.db.Where(&User{Username: username}).First(&u)
+	if result.Error != nil {
+		return nil, myerror.HttpBadRequest("user", "don't exist")
+	}
+	return dataToBiz(&u), nil
+}
+
 func (r userRepo) Update(ctx context.Context, user *biz.User) error {
-	u := bizToData(user)
+	u := bizToDataUser(user)
 	var us User
 	r.data.db.Select("id").Where(&User{Email: u.Email}).First(&us)
 
@@ -87,7 +96,7 @@ func dataToBiz(u *User) *biz.User {
 	}
 }
 
-func bizToData(u *biz.User) *User {
+func bizToDataUser(u *biz.User) *User {
 	return &User{
 		Email:    u.Email,
 		Username: u.Username,

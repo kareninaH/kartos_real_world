@@ -44,3 +44,8 @@ func (r userRepo) GetToken(ctx context.Context, email, username string) (bool, s
 
 	return true, result
 }
+
+func (r userRepo) RemoveToken(ctx context.Context, email, username string) {
+	key := buildTokenKey(email, username)
+	r.data.rd.Del(ctx, key)
+}

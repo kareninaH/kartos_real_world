@@ -51,13 +51,28 @@ func (s *RealWorldService) UpdateUser(ctx context.Context, req *v1.UpdateUserReq
 	return userLoginToUserReply(ul), nil
 }
 func (s *RealWorldService) GetProfile(ctx context.Context, req *v1.GetProfileRequest) (*v1.ProfileReply, error) {
-	return &v1.ProfileReply{}, nil
+	profile, err := s.uuc.GetProfile(ctx, req.Username)
+	if err != nil {
+		return nil, err
+	}
+
+	return profileToProfileReply(profile), nil
 }
 func (s *RealWorldService) FollowUser(ctx context.Context, req *v1.FollowUserRequest) (*v1.ProfileReply, error) {
-	return &v1.ProfileReply{}, nil
+	profile, err := s.uuc.FollowUser(ctx, req.Username)
+	if err != nil {
+		return nil, err
+	}
+
+	return profileToProfileReply(profile), nil
 }
 func (s *RealWorldService) UnFollowUser(ctx context.Context, req *v1.UnFollowUserRequest) (*v1.ProfileReply, error) {
-	return &v1.ProfileReply{}, nil
+	profile, err := s.uuc.UnFollowUser(ctx, req.Username)
+	if err != nil {
+		return nil, err
+	}
+
+	return profileToProfileReply(profile), nil
 }
 func (s *RealWorldService) FavoriteArticle(ctx context.Context, req *v1.FavoriteArticleRequest) (*v1.SingleArticleReply, error) {
 	return &v1.SingleArticleReply{}, nil
@@ -74,6 +89,17 @@ func userLoginToUserReply(ul *biz.UserLogin) *v1.UserReply {
 			Username: ul.Username,
 			Bio:      ul.Bio,
 			Image:    ul.Image,
+		},
+	}
+}
+
+func profileToProfileReply(p *biz.Profile) *v1.ProfileReply {
+	return &v1.ProfileReply{
+		Profile: &v1.ProfileReply_Profile{
+			Username:  p.Username,
+			Bio:       p.Bio,
+			Image:     p.Image,
+			Following: p.Following,
 		},
 	}
 }
