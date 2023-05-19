@@ -9,7 +9,6 @@ services:
       MYSQL_DATABASE: real_world # 自动创建
     volumes:
       - "./data:/var/lib/mysql"
-      - "./db.sql:/opt/sqlfile/realworld.sql"
     networks:
       - realworld
   redis:
